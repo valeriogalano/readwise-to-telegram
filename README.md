@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://cdn.pensieriincodice.it/images/pensieriincodice-locandina.png" alt="Logo Progetto" width="150"/>
-  <h1>Pensieri In Codice — News to Telegram</h1>
+  <h1>Pensieri in codice — News to Telegram</h1>
   <p>Pubblica automaticamente le news di PIC nel gruppo Telegram del podcast, prelevandole da Readwise.</p>
   <p>
     <img src="https://img.shields.io/github/stars/valeriogalano/pensieriincodice-news-to-telegram?style=for-the-badge" alt="GitHub Stars"/>
