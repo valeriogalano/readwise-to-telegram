@@ -5,30 +5,23 @@ from datetime import datetime, timedelta
 
 from readwise import Readwise
 from telegram_helper import TelegramHelper
+from github_state import update_github_variable
 
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("main").setLevel(logging.DEBUG)
 
 
-def load_file():
+def load_published_ids() -> list:
+    raw = os.environ.get('PUBLISHED_IDS', '[]')
     try:
-        with open('readwise.json', 'rb') as f:
-            json_string = f.read()
-            published_documents = json.loads(json_string)
-    except FileNotFoundError:
-        logging.debug("File 'readwise.json' non trovato.")
-        published_documents = []
-
-    return published_documents
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        logging.warning("PUBLISHED_IDS non è JSON valido, uso lista vuota.")
+        return []
 
 
-def dump_file(published_documents):
-    with open('readwise.json', 'wb') as f:
-        json_string = json.dumps(
-            published_documents,
-            indent=4
-        )
-        f.write(json_string.encode())
+def save_published_ids(published_documents: list) -> None:
+    update_github_variable('PUBLISHED_IDS', json.dumps(published_documents))
 
 
 def escape_string(text_to_escape):
@@ -67,7 +60,7 @@ def main():
         logging.debug("Nessun documento con tag 'published' trovato.")
         return
 
-    published_documents = load_file()
+    published_documents = load_published_ids()
 
     to_publish = []
     for document in response:
@@ -93,7 +86,7 @@ def main():
     try:
         tg.send(message)
         published_documents.append(document['id'])
-        dump_file(published_documents)
+        save_published_ids(published_documents)
     except Exception as e:
         # Re-raise to ensure a non-zero exit code so the GitHub Action fails
         logging.error("Errore durante l'invio del messaggio su Telegram: %s", e)
