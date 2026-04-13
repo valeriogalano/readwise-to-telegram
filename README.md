@@ -37,6 +37,9 @@ TELEGRAM_BOT_API_KEY="<token del bot Telegram>"
 TELEGRAM_CHAT_IDS="<chat ID separati da virgola>"
 TELEGRAM_MESSAGE_TEMPLATE="<template del messaggio>"
 READWISE_ACCESS_TOKEN="<token di accesso Readwise>"
+PUBLISHED_IDS="<array JSON di ID pubblicati>"
+GH_TOKEN="<token PAT fine-grained per variabili>"
+GITHUB_REPOSITORY="<repository automatico in GitHub Actions>"
 ```
 
 | Variabile | Descrizione |
