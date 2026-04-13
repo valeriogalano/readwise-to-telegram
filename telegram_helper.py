@@ -3,9 +3,6 @@ import logging
 import os
 
 import requests
-from urllib3.exceptions import InsecureRequestWarning
-
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 logger = logging.getLogger("telegram")
 
@@ -27,7 +24,6 @@ class TelegramHelper:
     ):
         headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic base64'
         }
         url = f'https://api.telegram.org/bot{self.token}/sendMessage'
         data_dict = {
@@ -41,7 +37,6 @@ class TelegramHelper:
             url,
             data=data,
             headers=headers,
-            verify=False
         )
 
         if response.status_code != 200:
